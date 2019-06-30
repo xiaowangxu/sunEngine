@@ -1,0 +1,35 @@
+﻿C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\Common7\IDE\VC\VCTargets\Microsoft.CppBuild.targets(391,5): warning MSB8028: 中间目录(Debug\)包含从另一个项目(TTT999.vcxproj)共享的文件。   这会导致错误的清除和重新生成行为。
+  engine_Behaviour.cpp
+c:\users\王徐\studio unnamed\999\ttt999\ttt999\vector.h(15): warning C4114: 多次使用同一类型限定符
+  c:\users\王徐\studio unnamed\999\ttt999\ttt999\vector.h(19): note: 参见对正在编译的 类 模板 实例化 "Vector2<T>" 的引用
+c:\users\王徐\studio unnamed\999\ttt999\ttt999\vector.h(51): warning C4114: 多次使用同一类型限定符
+  c:\users\王徐\studio unnamed\999\ttt999\ttt999\vector.h(55): note: 参见对正在编译的 类 模板 实例化 "Vector3<T>" 的引用
+c:\users\王徐\studio unnamed\999\ttt999\ttt999\engine_behaviour.cpp(120): warning C4244: “参数”: 从“double”转换到“const GLclampf”，可能丢失数据
+  engine_BehaviourManager.cpp
+c:\users\王徐\studio unnamed\999\ttt999\ttt999\vector.h(15): warning C4114: 多次使用同一类型限定符
+  c:\users\王徐\studio unnamed\999\ttt999\ttt999\vector.h(19): note: 参见对正在编译的 类 模板 实例化 "Vector2<T>" 的引用
+c:\users\王徐\studio unnamed\999\ttt999\ttt999\vector.h(51): warning C4114: 多次使用同一类型限定符
+  c:\users\王徐\studio unnamed\999\ttt999\ttt999\vector.h(55): note: 参见对正在编译的 类 模板 实例化 "Vector3<T>" 的引用
+  engine_Graph.cpp
+c:\users\王徐\studio unnamed\999\ttt999\ttt999\vector.h(15): warning C4114: 多次使用同一类型限定符
+  c:\users\王徐\studio unnamed\999\ttt999\ttt999\vector.h(19): note: 参见对正在编译的 类 模板 实例化 "Vector2<T>" 的引用
+c:\users\王徐\studio unnamed\999\ttt999\ttt999\vector.h(51): warning C4114: 多次使用同一类型限定符
+  c:\users\王徐\studio unnamed\999\ttt999\ttt999\vector.h(55): note: 参见对正在编译的 类 模板 实例化 "Vector3<T>" 的引用
+c:\users\王徐\studio unnamed\999\ttt999\ttt999\engine_graph.cpp(106): warning C4018: “<”: 有符号/无符号不匹配
+  engine_Plugin.cpp
+c:\users\王徐\studio unnamed\999\ttt999\ttt999\vector.h(15): warning C4114: 多次使用同一类型限定符
+  c:\users\王徐\studio unnamed\999\ttt999\ttt999\vector.h(19): note: 参见对正在编译的 类 模板 实例化 "Vector2<T>" 的引用
+c:\users\王徐\studio unnamed\999\ttt999\ttt999\vector.h(51): warning C4114: 多次使用同一类型限定符
+  c:\users\王徐\studio unnamed\999\ttt999\ttt999\vector.h(55): note: 参见对正在编译的 类 模板 实例化 "Vector3<T>" 的引用
+c:\users\王徐\studio unnamed\999\ttt999\ttt999\engine_plugin.cpp(144): warning C4244: “参数”: 从“GLdouble”转换到“GLfloat”，可能丢失数据
+c:\users\王徐\studio unnamed\999\ttt999\ttt999\engine_plugin.cpp(143): warning C4244: “参数”: 从“GLdouble”转换到“GLfloat”，可能丢失数据
+  sunEngine.cpp
+c:\users\王徐\studio unnamed\999\ttt999\ttt999\vector.h(15): warning C4114: 多次使用同一类型限定符
+  c:\users\王徐\studio unnamed\999\ttt999\ttt999\vector.h(19): note: 参见对正在编译的 类 模板 实例化 "Vector2<T>" 的引用
+c:\users\王徐\studio unnamed\999\ttt999\ttt999\vector.h(51): warning C4114: 多次使用同一类型限定符
+  c:\users\王徐\studio unnamed\999\ttt999\ttt999\vector.h(55): note: 参见对正在编译的 类 模板 实例化 "Vector3<T>" 的引用
+c:\users\王徐\studio unnamed\999\ttt999\ttt999\sunengine.h(19): warning C4244: “参数”: 从“double”转换到“GLint”，可能丢失数据
+c:\users\王徐\studio unnamed\999\ttt999\ttt999\sunengine.cpp(30): warning C4244: “参数”: 从“double”转换到“const GLfloat”，可能丢失数据
+c:\users\王徐\studio unnamed\999\ttt999\ttt999\sunengine.cpp(31): warning C4244: “参数”: 从“double”转换到“const GLfloat”，可能丢失数据
+  正在生成代码...
+  TTT999.vcxproj -> C:\Users\王徐\studio UNNAMED\999\TTT999\Debug\sunEngine.exe
