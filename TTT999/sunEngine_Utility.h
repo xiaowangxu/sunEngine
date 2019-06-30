@@ -35,7 +35,7 @@ struct MouseObj
 {
 	Vector2<GLdouble> Position;
 	Mouse_Button::Mouse_Button Button = Mouse_Button::None;
-	Mouse_Button::Mouse_Button_State State;
+	Mouse_Button::Mouse_Button_State State = Mouse_Button::Release;
 };
 
 void MouseButton(int button, int state, int X, int Y);

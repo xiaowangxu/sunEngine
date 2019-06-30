@@ -64,9 +64,16 @@ class MouseSensor : public Behaviour
 {
 private:
 	bool isIn = false;
-
+	Mouse_Button::Mouse_Button_State LastButtonState = Mouse_Button::Release;
+	bool OnButtonClick = false;
+	Mouse_Button::Mouse_Button ButtonClicked = Mouse_Button::None;
+	bool isLastIn = false;
+	bool RollIn = false,RollOut = false;
 public:
 	MouseSensor();
 	bool MouseisIn() const;
+	bool OnRollIn() const;
+	bool OnRollOut() const;
+	bool OnClick(const Mouse_Button::Mouse_Button button)const;
 	virtual void Update(engine_Graph &Target);
 };

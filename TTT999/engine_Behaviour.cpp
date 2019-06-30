@@ -193,8 +193,27 @@ bool MouseSensor::MouseisIn() const
 	return this->isIn;
 }
 
+bool MouseSensor::OnClick(const Mouse_Button::Mouse_Button button) const
+{
+	
+	return this->OnButtonClick && (button == this->ButtonClicked);
+}
+
+bool MouseSensor::OnRollIn() const
+{
+
+	return this->RollIn;
+}
+
+bool MouseSensor::OnRollOut() const
+{
+
+	return this->RollOut;
+}
+
 void MouseSensor::Update(engine_Graph &Target)
 {
+
 	GLdouble DrawX, DrawY;
 
 	switch (Target.GetAnchorPoint())
@@ -247,4 +266,42 @@ void MouseSensor::Update(engine_Graph &Target)
 	{
 		this->isIn = false;
 	}
+
+	// Update Click
+	if ((Mouse.State == Mouse_Button::Down && LastButtonState == Mouse_Button::Release) && isIn)
+	{
+		this->OnButtonClick = true;
+		ButtonClicked = Mouse.Button;
+		//cout << ButtonClicked << "On Clicked" << endl;
+	}
+	else
+	{
+		this->OnButtonClick = false;
+	}
+
+	// Update Roll In & Out
+	if(isLastIn != isIn)
+	{
+		if(isLastIn)
+		{
+			this->RollOut = true;
+			//cout<<"RollOut"<<endl;
+		}
+		else
+		{
+			this->RollIn = true;
+			//cout << "RollIn" << endl;
+		}
+	}
+	else
+	{
+		this->RollIn = false;
+		this->RollOut = false;
+	}
+
+
+	// Next Tick
+	this->LastButtonState = Mouse.State;
+	this->isLastIn = isIn;
+
 }
