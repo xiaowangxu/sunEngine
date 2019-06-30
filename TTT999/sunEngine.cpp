@@ -17,7 +17,7 @@ public:
 	{
 		Square.SetAnchorPoint(sunEngine_Graph::Center);
 		Square.SetSize(40,40);
-		ChangeR.SetAnimation(0, (rand()%100)/100.0,2.0, bh_Animater::Linear, bh_Animater::Value);
+		ChangeR.SetAnimation(0, (rand()%100)/100.0,2.0, bh_Animater::Linear,bh_Animater::PingPong,bh_Animater::Value);
 		Square.AddBehaviour(ChangeR);
 		ChangeR.StartAniamtion();
 	}
@@ -30,11 +30,6 @@ public:
 		Square.SetR(ChangeR.GetValue());
 		Square.SetG(ChangeR.GetValue());
 		Square.SetB(ChangeR.GetValue());
-		if(ChangeR.GetState() == bh_Animater::Ended)
-		{
-			ChangeR.ReverseAniamtion();
-			ChangeR.StartAniamtion();
-		}
 		if(Mouse.Button == Mouse_Button::Middle && Mouse.State == Mouse_Button::Down)
 			Square.SetPosition(sunEngine::Lerp(Square.GetPosition().X, Mouse.Position.X,0.3),
 							   sunEngine::Lerp(Square.GetPosition().Y, Mouse.Position.Y,0.3));

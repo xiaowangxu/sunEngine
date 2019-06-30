@@ -10,11 +10,12 @@ Animater::Animater():
 	Duration(60),
 	CurrentTime(0),
 	AnimationType(bh_Animater::Linear),
+	AnimationMode(bh_Animater::Once),
 	Bond(bh_Animater::Value),
 	isUpdated(false),
 	State(bh_Animater::Null) {}
 
-Animater::Animater(const string &name, double start, double end, double duration, bh_Animater::Animation_Type type, bh_Animater::Animation_Bond target):
+Animater::Animater(const string &name, double start, double end, double duration, bh_Animater::Animation_Type type, bh_Animater::Animation_Mode mode, bh_Animater::Animation_Bond target):
 	Behaviour(name),
 	Value(0),
 	Start(start),
@@ -22,11 +23,12 @@ Animater::Animater(const string &name, double start, double end, double duration
 	Duration(duration),
 	CurrentTime(0),
 	AnimationType(type),
+	AnimationMode(mode),
 	Bond(target),
 	isUpdated(false),
 	State(bh_Animater::Null) {}
-
-void Animater::SetAnimation(double start, double end, double duration, bh_Animater::Animation_Type type, bh_Animater::Animation_Bond target)
+	
+void Animater::SetAnimation(double start, double end, double duration, bh_Animater::Animation_Type type, bh_Animater::Animation_Mode mode, bh_Animater::Animation_Bond target)
 {
 	Value = 0;
 	Start = start;
@@ -34,6 +36,7 @@ void Animater::SetAnimation(double start, double end, double duration, bh_Animat
 	Duration = duration;
 	CurrentTime = 0;
 	AnimationType = type;
+	AnimationMode = mode;
 	Bond = target;
 	isUpdated = false;
 	State = bh_Animater::Null;
@@ -41,7 +44,30 @@ void Animater::SetAnimation(double start, double end, double duration, bh_Animat
 
 void Animater::AnimationUpdate()
 {
-	if (this->State == bh_Animater::Ended || this->State == bh_Animater::Null || this->isUpdated)	return;
+	if( this->isUpdated || this->State == bh_Animater::Null)	return;
+
+	if (this->State == bh_Animater::Ended)
+	{
+		switch (this->AnimationMode)
+		{
+		case bh_Animater::Once:
+			return;
+			break;
+		case bh_Animater::Loop:
+			this->ForceStartAniamtion();
+			return;
+			break;
+		case bh_Animater::PingPong:
+			this->ReverseAniamtion();
+			this->ForceStartAniamtion();
+			return;
+			break;
+		default:
+			break;
+		}
+		return;
+	}
+
 	switch (this->AnimationType)
 	{
 	case bh_Animater::Linear:
