@@ -24,12 +24,7 @@ public:
 
 	void Update()
 	{
-		Square.SetAngle(Square.GetAngle()+0.1);
 		Square.SetEdgeCount(int(sunEngine::Distance(Mouse.Position.X, Mouse.Position.Y, Square.GetPosition().X, Square.GetPosition().Y) / 10)%10);
-		ChangeR.AnimationUpdate();
-		Square.SetR(ChangeR.GetValue());
-		Square.SetG(ChangeR.GetValue());
-		Square.SetB(ChangeR.GetValue());
 		if(Mouse.Button == Mouse_Button::Middle && Mouse.State == Mouse_Button::Down)
 			Square.SetPosition(sunEngine::Lerp(Square.GetPosition().X, Mouse.Position.X,0.3),
 							   sunEngine::Lerp(Square.GetPosition().Y, Mouse.Position.Y,0.3));
@@ -37,10 +32,14 @@ public:
 			Square.SetPosition(sunEngine::Lerp(Square.GetPosition().X, Origin.X, 0.1),
 							   sunEngine::Lerp(Square.GetPosition().Y, Origin.Y, 0.1));
 
-		
 			Square.SetSize(
 				sunEngine::Clamp(sunEngine::Distance(Mouse.Position.X, Mouse.Position.Y, Square.GetPosition().X, Square.GetPosition().Y) / 10, (GLdouble)10, (GLdouble)40),
 				sunEngine::Clamp(sunEngine::Distance(Mouse.Position.X, Mouse.Position.Y, Square.GetPosition().X, Square.GetPosition().Y) / 10, (GLdouble)10, (GLdouble)40));
+
+		ChangeR.AnimationUpdate();
+		Square.SetR(ChangeR.GetValue());
+		Square.SetG(ChangeR.GetValue());
+		Square.SetB(ChangeR.GetValue());
 	}
 
 };
@@ -49,8 +48,16 @@ const int Count = 32;
 
 TEST Obj[18][Count];
 
+Shape test;
+
+MouseSensor testmouse;
+
 void game_Initialize()
 {
+	test.SetShape(6,1.0,0.0,0.0);
+	test.SetPosition(360,640);
+	test.SetSize(100,100);
+	test.AddBehaviour(testmouse);
 	for(int i=0;i<18;i++)
 	{
 		for (int j = 0; j < Count; j++)
@@ -69,5 +76,15 @@ void game_MainLoop()
 		{
 			Obj[i][j].Update();
 		}
+	}
+	if(testmouse.MouseisIn())
+	{
+		test.SetR(0.0);
+		test.SetB(1.0);
+	}
+	else
+	{
+		test.SetR(1.0);
+		test.SetB(0.0);
 	}
 }

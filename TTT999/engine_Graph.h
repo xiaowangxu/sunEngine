@@ -70,6 +70,7 @@ public:
 	sunEngine_Graph::engine_Graph_Visible GetVisibility();
 
 	void UpdateBehaviour();
+	virtual sunEngine_Graph::engine_Graph_AnchorPoint GetAnchorPoint() const;
 	virtual void Render();
 };
 

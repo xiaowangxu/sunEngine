@@ -32,5 +32,7 @@ public:
 	void SetR(const GLfloat R);
 	void SetG(const GLfloat G);
 	void SetB(const GLfloat B);
+
+	virtual sunEngine_Graph::engine_Graph_AnchorPoint GetAnchorPoint() const;
 	virtual void Render();
 };

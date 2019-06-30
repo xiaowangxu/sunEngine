@@ -54,12 +54,12 @@ void Animater::AnimationUpdate()
 			return;
 			break;
 		case bh_Animater::Loop:
-			this->ForceStartAniamtion();
+			this->ForceRestartAniamtion();
 			return;
 			break;
 		case bh_Animater::PingPong:
 			this->ReverseAniamtion();
-			this->ForceStartAniamtion();
+			this->ForceRestartAniamtion();
 			return;
 			break;
 		default:
@@ -100,13 +100,40 @@ void Animater::AnimationUpdate()
 void Animater::StartAniamtion()
 {
 	if (this->State != bh_Animater::Playing)
-		this->CurrentTime = 0;
 	this->State = bh_Animater::Playing;
 }
 
-void Animater::ForceStartAniamtion()
+void Animater::ForceRestartAniamtion()
 {
 	this->State = bh_Animater::Playing;
+}
+
+void Animater::PauseAnimation()
+{
+	if(this->State == bh_Animater::Playing)
+	{
+		this->State = bh_Animater::Null;
+	}
+}
+
+void Animater::StopAnimation(bh_Animater::Animation_StopMode mode)
+{
+	if(this->State != bh_Animater::Playing)	return;
+	this->CurrentTime = 0;
+	this->State = bh_Animater::Null;
+	switch (mode)
+	{
+	case bh_Animater::Start:
+		this->Value = this->Start;
+		break;
+	case bh_Animater::End:
+		this->Value = this->End;
+		break;
+	case bh_Animater::Current:
+		break;
+	default:
+		break;
+	}
 }
 
 void Animater::ReverseAniamtion()
@@ -158,24 +185,66 @@ void Animater::Update(engine_Graph &Target)
 	this->isUpdated = false;
 }
 
-Timer::Timer(const string &name, double duration):
-	Behaviour(name),Duration(duration),State(bh_Timer::Idol){}
+// MouseSensor
+MouseSensor::MouseSensor() : Behaviour("NewAnimater"), isIn(false) {}
 
-void Timer::StartTimer()
+bool MouseSensor::MouseisIn() const
 {
-	this->State = bh_Timer::Counting;
+	return this->isIn;
 }
 
-bh_Timer::Timer_State Timer::GetState() const
+void MouseSensor::Update(engine_Graph &Target)
 {
-	return this->State;
-}
+	GLdouble DrawX, DrawY;
 
-void Timer::Update(engine_Graph &Target)
-{
-	this->CurrentTime += 1;
-	if(this->CurrentTime >= this->Duration)
+	switch (Target.GetAnchorPoint())
 	{
-		this->State = bh_Timer::Ended;
+	case sunEngine_Graph::Top:
+	case sunEngine_Graph::TopLeft:
+	case sunEngine_Graph::TopRight:
+		DrawY = Target.GetPosition().Y - Target.GetSize().Y;
+		break;
+	case sunEngine_Graph::Left:
+	case sunEngine_Graph::Center:
+	case sunEngine_Graph::Right:
+		DrawY = Target.GetPosition().Y - Target.GetSize().Y / 2;
+		break;
+	case sunEngine_Graph::BottomLeft:
+	case sunEngine_Graph::Bottom:
+	case sunEngine_Graph::BottomRight:
+		DrawY = Target.GetPosition().Y;
+		break;
+	default:
+		break;
+	}
+
+	switch (Target.GetAnchorPoint())
+	{
+	case sunEngine_Graph::Left:
+	case sunEngine_Graph::TopLeft:
+	case sunEngine_Graph::BottomLeft:
+		DrawX = Target.GetPosition().X;
+		break;
+	case sunEngine_Graph::Top:
+	case sunEngine_Graph::Center:
+	case sunEngine_Graph::Bottom:
+		DrawX = Target.GetPosition().X - Target.GetSize().X / 2;
+		break;
+	case sunEngine_Graph::BottomRight:
+	case sunEngine_Graph::Right:
+	case sunEngine_Graph::TopRight:
+		DrawX = Target.GetPosition().X - Target.GetSize().X;
+		break;
+	default:
+		break;
+	}
+
+	if (Mouse.Position.X >= DrawX && Mouse.Position.X <= DrawX + Target.GetSize().X && Mouse.Position.Y >= DrawY && Mouse.Position.Y <= DrawY + Target.GetSize().Y)
+	{
+		this->isIn = true;
+	}
+	else
+	{
+		this->isIn = false;
 	}
 }

@@ -21,7 +21,7 @@ namespace Mouse_Button
 
 enum Mouse_Button
 {
-	Left,Middle,Right
+	None,Left,Middle,Right
 };
 
 enum Mouse_Button_State
@@ -34,7 +34,7 @@ enum Mouse_Button_State
 struct MouseObj
 {
 	Vector2<GLdouble> Position;
-	Mouse_Button::Mouse_Button Button;
+	Mouse_Button::Mouse_Button Button = Mouse_Button::None;
 	Mouse_Button::Mouse_Button_State State;
 };
 

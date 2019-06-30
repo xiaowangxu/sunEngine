@@ -110,6 +110,11 @@ void engine_Graph::UpdateBehaviour()
 	}
 }
 
+sunEngine_Graph::engine_Graph_AnchorPoint engine_Graph::GetAnchorPoint() const
+{
+	return sunEngine_Graph::BottomLeft;
+}
+
 void engine_Graph::Render()
 {}
 
@@ -119,6 +124,11 @@ vector<engine_Graph *> engine_Graph_Buffer;
 void engine_Graph_Render()
 {
 	int Count = engine_Graph_Buffer.size();
+	if(Count == 0)
+	{
+		App.BgColor = Vector3<GLclampf>(1.0, 0.0, 0.0);
+		return;
+	}
 	for (int i = 0; i < Count; i++)
 	{
 		engine_Graph_Buffer.at(i)->Render();

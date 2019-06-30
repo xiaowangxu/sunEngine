@@ -87,6 +87,11 @@ void Shape::SetAnchorPoint(sunEngine_Graph::engine_Graph_AnchorPoint anchorpoint
 	this->AnchorPoint = anchorpoint;
 }
 
+sunEngine_Graph::engine_Graph_AnchorPoint Shape::GetAnchorPoint() const
+{
+	return this->AnchorPoint;
+}
+
 void Shape::Render()
 {
 	if(this->GetVisibility() == sunEngine_Graph::Invisible)	return;

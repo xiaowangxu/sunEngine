@@ -28,6 +28,11 @@ enum Animation_Bond
 	Value,X,Y,Width,Height,Angle,Opacity
 };
 
+enum Animation_StopMode
+{
+	Start,End,Current
+};
+
 } // namespace bh_Animatier
 
 class Animater : public Behaviour
@@ -45,7 +50,9 @@ public:
 	Animater(const string &name, double start, double end, double duration, bh_Animater::Animation_Type type, bh_Animater::Animation_Mode mode, bh_Animater::Animation_Bond target);
 	void SetAnimation(double start, double end, double duration, bh_Animater::Animation_Type type, bh_Animater::Animation_Mode mode, bh_Animater::Animation_Bond target);
 	void StartAniamtion();
-	void ForceStartAniamtion();
+	void PauseAnimation();
+	void StopAnimation(bh_Animater::Animation_StopMode mode);
+	void ForceRestartAniamtion();
 	void ReverseAniamtion();
 	void AnimationUpdate();
 	bh_Animater::Animation_State GetState() const;
@@ -53,24 +60,13 @@ public:
 	virtual void Update(engine_Graph &Target);
 };
 
-namespace bh_Timer
-{
-
-enum Timer_State
-{
-	Idol,Counting,Ended
-};
-
-};
-
-class Timer : public Behaviour
+class MouseSensor : public Behaviour
 {
 private:
-	double Duration = 100,CurrentTime = 0;
-	bh_Timer::Timer_State State = bh_Timer::Idol;
+	bool isIn = false;
+
 public:
-	Timer(const string &name, double duration);
-	void StartTimer();
-	bh_Timer::Timer_State GetState() const;
+	MouseSensor();
+	bool MouseisIn() const;
 	virtual void Update(engine_Graph &Target);
 };
