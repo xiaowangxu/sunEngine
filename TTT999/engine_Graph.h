@@ -77,4 +77,5 @@ public:
 extern vector<engine_Graph *> engine_Graph_Buffer;
 
 void engine_Graph_Render();
+void engine_Graph_Update();
 void engine_Graph_Buffer_PrintInfo(bool detail);

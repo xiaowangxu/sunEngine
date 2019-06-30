@@ -13,7 +13,7 @@ struct Application
 	Vector2<GLdouble> ViewportSize = Vector2<GLdouble>(720., 1280.);
 	Vector2<GLdouble> Origin = Vector2<GLdouble>(0., 0.);
 	Vector3<GLclampf> BgColor = Vector3<GLclampf>(0.0f, 0.0f, 0.0f);
-	int dt = 16;
+	int dt = 17;
 };
 
 namespace Mouse_Button

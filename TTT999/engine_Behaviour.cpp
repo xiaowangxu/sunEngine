@@ -62,10 +62,12 @@ void Animater::AnimationUpdate()
 		this->State = bh_Animater::Ended;
 		this->CurrentTime = 0;
 		this->Value = this->End;
+		//cout << "Animation Ended" << endl;
 	}
 	else
 	{
-		this->CurrentTime += 1;
+		this->CurrentTime += App.dt/1000.0;
+		//cout<<"Time Updated "<<CurrentTime<<endl;
 	}
 }
 
@@ -73,6 +75,11 @@ void Animater::StartAniamtion()
 {
 	if (this->State != bh_Animater::Playing)
 		this->CurrentTime = 0;
+	this->State = bh_Animater::Playing;
+}
+
+void Animater::ForceStartAniamtion()
+{
 	this->State = bh_Animater::Playing;
 }
 

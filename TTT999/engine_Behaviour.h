@@ -29,7 +29,7 @@ class Animater : public Behaviour
 {
 private:
 	double Start,End,Duration,Value = 0;
-	double CurrentTime;
+	double CurrentTime = 0;
 	bh_Animater::Animation_Bond Bond;
 	bh_Animater::Animation_State State;
 	bh_Animater::Animation_Type AnimationType;
@@ -39,6 +39,7 @@ public:
 	Animater(const string &name, double start, double end, double duration, bh_Animater::Animation_Type type,bh_Animater::Animation_Bond target);
 	void SetAnimation(double start, double end, double duration, bh_Animater::Animation_Type type, bh_Animater::Animation_Bond target);
 	void StartAniamtion();
+	void ForceStartAniamtion();
 	void ReverseAniamtion();
 	void AnimationUpdate();
 	bh_Animater::Animation_State GetState() const;

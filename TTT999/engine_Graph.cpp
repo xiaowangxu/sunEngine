@@ -121,8 +121,16 @@ void engine_Graph_Render()
 	int Count = engine_Graph_Buffer.size();
 	for (int i = 0; i < Count; i++)
 	{
-		engine_Graph_Buffer.at(i)->UpdateBehaviour();
 		engine_Graph_Buffer.at(i)->Render();
+	}
+}
+
+void engine_Graph_Update()
+{
+	int Count = engine_Graph_Buffer.size();
+	for (int i = 0; i < Count; i++)
+	{
+		engine_Graph_Buffer.at(i)->UpdateBehaviour();
 	}
 }
 

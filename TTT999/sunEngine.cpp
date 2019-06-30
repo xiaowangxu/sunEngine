@@ -17,7 +17,7 @@ public:
 	{
 		Square.SetAnchorPoint(sunEngine_Graph::Center);
 		Square.SetSize(40,40);
-		ChangeR.SetAnimation(0, (rand()%100)/100.0, 120, bh_Animater::Linear, bh_Animater::Value);
+		ChangeR.SetAnimation(0, (rand()%100)/100.0,2.0, bh_Animater::Linear, bh_Animater::Value);
 		Square.AddBehaviour(ChangeR);
 		ChangeR.StartAniamtion();
 	}
@@ -29,6 +29,7 @@ public:
 		ChangeR.AnimationUpdate();
 		Square.SetR(ChangeR.GetValue());
 		Square.SetG(ChangeR.GetValue());
+		Square.SetB(ChangeR.GetValue());
 		if(ChangeR.GetState() == bh_Animater::Ended)
 		{
 			ChangeR.ReverseAniamtion();
@@ -53,8 +54,6 @@ const int Count = 32;
 
 TEST Obj[18][Count];
 
-Shape *Center;
-
 void game_Initialize()
 {
 	for(int i=0;i<18;i++)
@@ -75,20 +74,5 @@ void game_MainLoop()
 		{
 			Obj[i][j].Update();
 		}
-	}
-
-	if (Center == NULL && Mouse.Button == Mouse_Button::Left && Mouse.State == Mouse_Button::Down)
-	{
-		Center = new Shape;
-		Center->SetShape(6, 1.0, 0.0, 0.0);
-		Center->SetPosition(Mouse.Position.X, Mouse.Position.Y);
-		Center->SetSize(100, 100);
-		engine_Graph_Buffer_PrintInfo(false);
-	}
-	if (Center != NULL && Mouse.Button == Mouse_Button::Right && Mouse.State == Mouse_Button::Down)
-	{
-		delete Center;
-		Center = NULL;
-		engine_Graph_Buffer_PrintInfo(false);
 	}
 }

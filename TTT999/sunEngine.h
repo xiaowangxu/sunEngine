@@ -21,8 +21,6 @@ void sunEngine_Initialize(int argc, char *argv[])
 	glutCreateWindow("NewGame");
 }
 
-void game_Test();
-
 void game_Initialize();
 void game_MainLoop();
 
@@ -31,6 +29,7 @@ void sunEngine_Render(void)
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT | GL_STENCIL_BUFFER_BIT);
 	glClearColor(App.BgColor.X, App.BgColor.Y, App.BgColor.Z, 1.0f);
 	engine_Graph_Render();
+	//cout<<"-- Render"<<endl;
 	glutPostRedisplay();
 	glutSwapBuffers();
 }
@@ -38,7 +37,7 @@ void sunEngine_Render(void)
 void sunEngine_Tick(int dt)
 {
 	game_MainLoop();
-	//cout<<"Tick Update"<<endl;
+	engine_Graph_Update();
 	glutTimerFunc(App.dt, sunEngine_Tick, 1);
 }
 
