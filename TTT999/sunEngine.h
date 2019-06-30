@@ -18,7 +18,7 @@ void sunEngine_Initialize(int argc, char *argv[])
 	gluOrtho2D(0.0, App.ViewportSize.X, 0.0, App.ViewportSize.Y);
 	glViewport(0.0, 0.0, App.WindowSize.X, App.WindowSize.Y);
 	glutInitWindowSize(App.WindowSize.X, App.WindowSize.Y);
-	glutCreateWindow("NewGame");
+	glutCreateWindow(App.Title.data());
 }
 
 void game_Initialize();
