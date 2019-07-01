@@ -45,12 +45,19 @@ void Animater::SetAnimation(double start, double end, double duration, bh_Animat
 void Animater::AnimationUpdate()
 {
 	//	On Finished
-
+	if(LastState != State && State == bh_Animater::Ended)
+	{
+		this->OnFinish = true;
+		//cout<<"On Animation Finished"<<endl;
+	}
+	else
+	{
+		this->OnFinish = false;
+	}
 	// Last State
+	this->LastState = this->State;
 
-	
-
-	if( this->isUpdated || this->State == bh_Animater::Null)	return;
+	if( this->isUpdated || this->State == bh_Animater::Null || this->SystemStopped)	return;
 
 	if (this->State == bh_Animater::Ended)
 	{
@@ -60,12 +67,12 @@ void Animater::AnimationUpdate()
 			return;
 			break;
 		case bh_Animater::Loop:
-			this->ForceRestartAniamtion();
+			this->ForceRestartAnimation();
 			return;
 			break;
 		case bh_Animater::PingPong:
-			this->ReverseAniamtion();
-			this->ForceRestartAniamtion();
+			this->ReverseAnimation();
+			this->ForceRestartAnimation();
 			return;
 			break;
 		default:
@@ -74,16 +81,43 @@ void Animater::AnimationUpdate()
 		return;
 	}
 
+	double t = CurrentTime / Duration;
+	double tOut = 1.0 - t;
+
 	switch (this->AnimationType)
 	{
 	case bh_Animater::Linear:
-		this->Value = Start + (End - Start) / Duration * CurrentTime;
+		this->Value = Start + (End - Start) * t;
 		break;
-	case bh_Animater::Quadratic:
-		this->Value = Start + ((End - Start) / (Duration * Duration)) * CurrentTime * CurrentTime;
+	case bh_Animater::QuadIn:
+		this->Value = Start + (End - Start) * t * t;
 		break;
-	case bh_Animater::Cubic:
-		this->Value = Start + ((End - Start) / (Duration * Duration * Duration)) * CurrentTime * CurrentTime * CurrentTime;
+	case bh_Animater::QuadOut:
+		this->Value = Start + (End - Start) * (1.0 - tOut * tOut);
+		break;
+	case bh_Animater::CubicIn:
+		this->Value = Start + (End - Start) * t * t * t;
+		break;
+	case bh_Animater::CubicOut:
+		this->Value = Start + (End - Start) * (1.0 - tOut * tOut * tOut);
+		break;
+	case bh_Animater::BackIn:
+		this->Value = Start + (End - Start) * (t * t * t - 1 * t * sin(t * sunEngine::Pi));
+		break;
+	case bh_Animater::BackOut:
+		this->Value = Start + (End - Start) * (1.0 - (tOut * tOut * tOut - 1 * tOut * sin(tOut * sunEngine::Pi)));
+		break;
+	case bh_Animater::ElasticIn:
+		this->Value = Start + (End - Start) * ((t * t) * sin(4.5 * sunEngine::Pi * t));
+		break;
+	case bh_Animater::ElasticOut:
+		this->Value = Start + (End - Start) * (1.0 - ((tOut * tOut) * sin(4.5 * sunEngine::Pi * tOut)));
+		break;
+	case bh_Animater::CircleIn:
+		this->Value = Start + (End - Start) * (1.0 - sqrt(1.0 - t * t));
+		break;
+	case bh_Animater::CircleOut:
+		this->Value = Start + (End - Start) * sqrt(1.0 - tOut * tOut);
 		break;
 	default:
 		break;
@@ -103,14 +137,18 @@ void Animater::AnimationUpdate()
 	}
 }
 
-void Animater::StartAniamtion()
+void Animater::StartAnimation()
 {
 	if (this->State != bh_Animater::Playing)
-	this->State = bh_Animater::Playing;
+	{
+		this->State = bh_Animater::Playing;
+		this->SystemStopped = false;
+	}
 }
 
-void Animater::ForceRestartAniamtion()
+void Animater::ForceRestartAnimation()
 {
+	this->SystemStopped = false;
 	this->State = bh_Animater::Playing;
 }
 
@@ -119,14 +157,16 @@ void Animater::PauseAnimation()
 	if(this->State == bh_Animater::Playing)
 	{
 		this->State = bh_Animater::Null;
+		this->SystemStopped = true;
 	}
 }
 
 void Animater::StopAnimation(bh_Animater::Animation_StopMode mode)
 {
-	if(this->State != bh_Animater::Playing)	return;
+	if(this->State == bh_Animater::Ended)	return;
 	this->CurrentTime = 0;
-	this->State = bh_Animater::Null;
+	this->State = bh_Animater::Ended;
+	this->SystemStopped = true;
 	switch (mode)
 	{
 	case bh_Animater::Start:
@@ -142,7 +182,7 @@ void Animater::StopAnimation(bh_Animater::Animation_StopMode mode)
 	}
 }
 
-void Animater::ReverseAniamtion()
+void Animater::ReverseAnimation()
 {
 	if (this->State != bh_Animater::Playing)
 		this->CurrentTime = 0;
@@ -150,6 +190,11 @@ void Animater::ReverseAniamtion()
 	this->Start = this->End;
 	this->End = temp;
 	this->State = bh_Animater::Null;
+}
+
+bool Animater::OnFinished() const
+{
+	return this->OnFinish;
 }
 
 bh_Animater::Animation_State Animater::GetState() const

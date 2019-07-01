@@ -37,6 +37,7 @@ void sunEngine_Render(void)
 void sunEngine_Tick(int dt)
 {
 	game_MainLoop();
+	MouseUpdate();
 	engine_Graph_Update();
 	glutTimerFunc(App.dt, sunEngine_Tick, 1);
 }

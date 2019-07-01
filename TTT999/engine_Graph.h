@@ -38,7 +38,7 @@ private:
 	Vector2<GLdouble> Position = Vector2<GLdouble>(0, 0);
 	GLdouble Angle = 0.0;
 	Vector2<GLdouble> Size = Vector2<GLdouble>(100, 100);
-	GLclampf Opacity = 1.0f;
+	GLfloat Opacity = 1.0f;
 	sunEngine_Graph::engine_Graph_Visible Visible = sunEngine_Graph::Visible;
 	vector<Behaviour *> TEST;
 public:
@@ -55,8 +55,8 @@ public:
 
 	void SetSize(const GLdouble Width, const GLdouble Height);
 
-	void SetOpacity(const GLclampf Opac);
-	
+	void SetOpacity(const GLfloat Opac);
+
 	void SetAngle(const GLdouble Ang);
 
 	void SetVisible(const sunEngine_Graph::engine_Graph_Visible visible);
@@ -65,7 +65,7 @@ public:
 
 	Vector2<GLdouble> GetPosition();
 	Vector2<GLdouble> GetSize();
-	GLclampf GetOpacity();
+	GLfloat GetOpacity();
 	GLdouble GetAngle();
 	sunEngine_Graph::engine_Graph_Visible GetVisibility();
 

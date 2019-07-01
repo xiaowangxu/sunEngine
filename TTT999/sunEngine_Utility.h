@@ -13,7 +13,7 @@ struct Application
 	Vector2<GLdouble> ViewportSize = Vector2<GLdouble>(1920., 1080.);
 	Vector2<GLdouble> Origin = Vector2<GLdouble>(0., 0.);
 	Vector3<GLclampf> BgColor = Vector3<GLclampf>(0.0f, 0.0f, 0.0f);
-	int dt = 17;
+	int dt = 16;
 };
 
 namespace Mouse_Button
@@ -36,10 +36,15 @@ struct MouseObj
 	Vector2<GLdouble> Position;
 	Mouse_Button::Mouse_Button Button = Mouse_Button::None;
 	Mouse_Button::Mouse_Button_State State = Mouse_Button::Release;
+	bool OnButtonClick = false;
+	Mouse_Button::Mouse_Button_State LastButtonState = Mouse_Button::Release;
+	Mouse_Button::Mouse_Button ButtonClicked = Mouse_Button::None;
 };
 
 void MouseButton(int button, int state, int X, int Y);
 void MousePosition(int X, int Y);
+void MouseUpdate();
+bool MouseOnClick(const Mouse_Button::Mouse_Button button);
 
 void WindowResize(int width, int height);
 

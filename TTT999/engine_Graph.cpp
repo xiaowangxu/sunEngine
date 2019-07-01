@@ -56,7 +56,16 @@ void engine_Graph::SetSize(const GLdouble Width, const GLdouble Height)
 
 void engine_Graph::SetAngle(const GLdouble Ang)
 {
-	this->Angle = Ang;
+	GLdouble angle = Ang;
+	while(angle >= 360.0)
+	{
+		angle -= 360.0;
+	}
+	while(angle < 0.0)
+	{
+		angle += 360.0;
+	}
+	this->Angle = angle;
 }
 
 void engine_Graph::SetVisible(const sunEngine_Graph::engine_Graph_Visible visible)
@@ -64,9 +73,11 @@ void engine_Graph::SetVisible(const sunEngine_Graph::engine_Graph_Visible visibl
 	this->Visible = visible;
 }
 
-void engine_Graph::SetOpacity(const GLclampf Opac)
+void engine_Graph::SetOpacity(const GLfloat Opac)
 {
-	this->Opacity = Opac;
+	if(Opac > 1.0)		this->Opacity = 1.0;
+	else if(Opac < 0.0)	this->Opacity = 0.0;
+	else				this->Opacity = Opac;
 }
 
 Vector2<GLdouble> engine_Graph::GetPosition()
@@ -79,7 +90,7 @@ Vector2<GLdouble> engine_Graph::GetSize()
 	return this->Size;
 }
 
-GLclampf engine_Graph::GetOpacity()
+GLfloat engine_Graph::GetOpacity()
 {
 	return this->Opacity;
 }

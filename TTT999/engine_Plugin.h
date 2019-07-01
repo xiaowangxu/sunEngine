@@ -29,9 +29,13 @@ public:
 	void SetAnchorPoint(sunEngine_Graph::engine_Graph_AnchorPoint anchorpoint);
 	void SetShape(const int edgecount,const GLfloat R,const GLfloat G,const GLfloat B);
 	void SetEdgeCount(const int edgecount);
+	void SetColor(const GLfloat R,const GLfloat G,const GLfloat B);
 	void SetR(const GLfloat R);
 	void SetG(const GLfloat G);
 	void SetB(const GLfloat B);
+
+	Vector3<GLfloat> GetColor() const;
+	int GetEdgeCount()const;
 
 	virtual sunEngine_Graph::engine_Graph_AnchorPoint GetAnchorPoint() const;
 	virtual void Render();

@@ -8,32 +8,95 @@ using namespace std;
 extern MouseObj Mouse;
 
 // Put Your Game Object Here
+class AnimationTest
+{
+public:
+	Shape Circle;
+	Animater Tween;
 
-Shape Circle;
-Shape Square;
-MouseSensor Sensor;
+	AnimationTest()
+	{
+		Circle.SetShape(4, 1.0, 0.0, 0.0);
+		Circle.SetSize(100, 100);
+		Circle.AddBehaviour(Tween);
+	}
+};
+
+AnimationTest Test[11];
 
 void game_Initialize()
 {
 	// the script here will only run once before the game start
-	Square.SetShape(6,1.0,0.0,0.0);
-	Square.SetPosition(960,540);
-	Square.SetSize(200,200);
-	Circle.SetShape(4, 0.0, 1.0, 0.0);
-	Circle.SetPosition(960, 540);
-	Circle.SetSize(200, 200);
-	Square.AddBehaviour(Sensor);
+	for(int i=0;i<11;i++)
+	{
+		Test[i].Circle.SetPosition(200+150*i,0);
+		Test[i].Circle.SetR(0.4 + 0.05*i);
+		switch (i)
+		{
+		case 0:
+			Test[i].Tween.SetAnimation(300, 780, 3, bh_Animater::Linear, bh_Animater::PingPong, bh_Animater::Y);
+			break;
+		case 1:
+			Test[i].Tween.SetAnimation(300, 780, 3, bh_Animater::QuadIn, bh_Animater::PingPong, bh_Animater::Y);
+			break;
+		case 2:
+			Test[i].Tween.SetAnimation(300, 780, 3, bh_Animater::QuadOut, bh_Animater::PingPong, bh_Animater::Y);
+			break;
+		case 3:
+			Test[i].Tween.SetAnimation(300, 780, 3, bh_Animater::CubicIn, bh_Animater::PingPong, bh_Animater::Y);
+			break;
+		case 4:
+			Test[i].Tween.SetAnimation(300, 780, 3, bh_Animater::CubicOut, bh_Animater::PingPong, bh_Animater::Y);
+			break;
+		case 5:
+			Test[i].Tween.SetAnimation(300, 780, 3, bh_Animater::BackIn, bh_Animater::PingPong, bh_Animater::Y);
+			break;
+		case 6:
+			Test[i].Tween.SetAnimation(300, 780, 3, bh_Animater::BackOut, bh_Animater::PingPong, bh_Animater::Y);
+			break;
+		case 7:
+			Test[i].Tween.SetAnimation(300, 780, 3, bh_Animater::ElasticIn, bh_Animater::PingPong, bh_Animater::Y);
+			break;
+		case 8:
+			Test[i].Tween.SetAnimation(300, 780, 3, bh_Animater::ElasticOut, bh_Animater::PingPong, bh_Animater::Y);
+			break;
+		case 9:
+			Test[i].Tween.SetAnimation(300, 780, 3, bh_Animater::CircleIn, bh_Animater::PingPong, bh_Animater::Y);
+			break;
+		case 10:
+			Test[i].Tween.SetAnimation(300, 780, 3, bh_Animater::CircleOut, bh_Animater::PingPong, bh_Animater::Y);
+			break;
+		default:
+			break;
+
+		}
+		Test[i].Tween.StartAnimation();
+	}
 }
 
 void game_MainLoop()
 {
 	// put your main game logic here
-	if(Sensor.OnRollIn()){
-	Square.SetAngle(Square.GetAngle() + 15);
-	Square.SetG(1.0);}
+	/* if (Sensor.OnRollIn())
+	{
+		Test.PauseAnimation();
+		//cout<<"Angle: "<<Square.GetAngle()<<endl;
+	}
 	if (Sensor.OnRollOut())
 	{
-		Square.SetAngle(Square.GetAngle() + 15);
-		Square.SetG(0.0);
+		Test.StartAniamtion();
+		//cout << "Angle: " << Square.GetAngle() << endl;
+	} */
+	if(MouseOnClick(Mouse_Button::Left))
+	{
+		cout<<"Left Clicked"<<endl;
+	}
+	if (MouseOnClick(Mouse_Button::	Right))
+	{
+		cout << "Right Clicked" << endl;
+	}
+	if (MouseOnClick(Mouse_Button::Middle))
+	{
+		cout << "Middle Clicked" << endl;
 	}
 }

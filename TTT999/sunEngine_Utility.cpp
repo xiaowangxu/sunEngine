@@ -42,6 +42,28 @@ void MousePosition(int X,int Y)
 	//cout << "(" << Mouse.Position.X << "," << Mouse.Position.Y << ")" << endl;
 }
 
+void MouseUpdate()
+{
+	if (Mouse.State == Mouse_Button::Down && Mouse.LastButtonState == Mouse_Button::Release)
+	{
+		Mouse.OnButtonClick = true;
+		Mouse.ButtonClicked = Mouse.Button;
+		//cout << Mouse.ButtonClicked << "On Clicked" << endl;
+	}
+	else
+	{
+		Mouse.OnButtonClick = false;
+	}
+
+	// Next Tick
+	Mouse.LastButtonState = Mouse.State;
+}
+
+bool MouseOnClick(const Mouse_Button::Mouse_Button button)
+{
+	return Mouse.OnButtonClick && (button == Mouse.ButtonClicked);
+}
+
 void WindowResize(int w, int h)
 {
 	

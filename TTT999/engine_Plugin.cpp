@@ -25,6 +25,13 @@ void Shape::SetEdgeCount(const int edgecount)
 	}
 }
 
+void Shape::SetColor(const GLfloat R, const GLfloat G, const GLfloat B)
+{
+	SetR(R);
+	SetG(G);
+	SetB(B);
+}
+
 void Shape::SetR(const GLfloat R)
 {
 	if(R > 1.0)
@@ -87,6 +94,16 @@ void Shape::SetAnchorPoint(sunEngine_Graph::engine_Graph_AnchorPoint anchorpoint
 	this->AnchorPoint = anchorpoint;
 }
 
+Vector3<GLfloat> Shape::GetColor() const
+{
+	return this->Color;
+}
+
+int Shape::GetEdgeCount() const
+{
+	return this->EdgeCount;
+}
+
 sunEngine_Graph::engine_Graph_AnchorPoint Shape::GetAnchorPoint() const
 {
 	return this->AnchorPoint;
@@ -96,7 +113,9 @@ void Shape::Render()
 {
 	if(this->GetVisibility() == sunEngine_Graph::Invisible)	return;
 
-	glColor3f(Color.X, Color.Y, Color.Z);
+	glEnable(GL_BLEND);
+	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+	glColor4f(Color.X, Color.Y, Color.Z,GetOpacity());
 	GLdouble DrawX,DrawY;
 
 	switch (AnchorPoint)
@@ -148,6 +167,7 @@ void Shape::Render()
 		glVertex2f(ViewportX_2_OGL((GetSize().X / 2.0 / cos(sunEngine::Pi / EdgeCount)) * cos(2 * sunEngine::Pi / EdgeCount * i + GetAngle() * sunEngine::Pi / 180.0 + sunEngine::Pi / EdgeCount) + DrawX + GetSize().X / 2.0),
 				   ViewportY_2_OGL((GetSize().X / 2.0 / cos(sunEngine::Pi / EdgeCount)) * sin(2 * sunEngine::Pi / EdgeCount * i + GetAngle() * sunEngine::Pi / 180.0 + sunEngine::Pi / EdgeCount) + DrawY + GetSize().Y / 2.0));
 	}
+	glDisable(GL_BLEND);
 	glEnd();
 
 	//cout<<"Title Rendered"<<endl;
