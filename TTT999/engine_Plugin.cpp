@@ -145,8 +145,8 @@ void Shape::Render()
 	glBegin(GL_POLYGON);
 	for (int i = 0; i < EdgeCount; i++)
 	{
-		glVertex2f(ViewportX_2_OGL(GetSize().X / 2.0 * cos(2 * sunEngine::Pi / EdgeCount * i + GetAngle() - sunEngine::Pi / EdgeCount) + DrawX + GetSize().X / 2.0),
-				   ViewportY_2_OGL(GetSize().Y / 2.0 * sin(2 * sunEngine::Pi / EdgeCount * i + GetAngle() - sunEngine::Pi / EdgeCount) + DrawY + GetSize().Y / 2.0));
+		glVertex2f(ViewportX_2_OGL(GetSize().X / 2.0 * cos(2 * sunEngine::Pi / EdgeCount * i + (GetAngle()-90.0) * sunEngine::Pi/180.0 - sunEngine::Pi / EdgeCount) + DrawX + GetSize().X / 2.0),
+				   ViewportY_2_OGL(GetSize().Y / 2.0 * sin(2 * sunEngine::Pi / EdgeCount * i + (GetAngle()-90.0) * sunEngine::Pi/180.0 - sunEngine::Pi / EdgeCount) + DrawY + GetSize().Y / 2.0));
 	}
 	glEnd();
 
