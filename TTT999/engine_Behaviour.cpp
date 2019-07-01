@@ -44,6 +44,12 @@ void Animater::SetAnimation(double start, double end, double duration, bh_Animat
 
 void Animater::AnimationUpdate()
 {
+	//	On Finished
+
+	// Last State
+
+	
+
 	if( this->isUpdated || this->State == bh_Animater::Null)	return;
 
 	if (this->State == bh_Animater::Ended)
@@ -158,6 +164,8 @@ double Animater::GetValue()
 
 void Animater::Update(engine_Graph &Target)
 {
+	this->isUpdated = false;
+	if(this->State == bh_Animater::Null)	return;
 	this->AnimationUpdate();
 	switch (this->Bond)
 	{
@@ -179,10 +187,13 @@ void Animater::Update(engine_Graph &Target)
 	case bh_Animater::Opacity:
 		this->GetTarget()->SetOpacity(this->Value);
 		break;
+	case bh_Animater::Size:
+		this->GetTarget()->SetWidth(this->Value);
+		this->GetTarget()->SetHeight(this->Value);
+		break;
 	default:
 		break;
 	}
-	this->isUpdated = false;
 }
 
 // MouseSensor

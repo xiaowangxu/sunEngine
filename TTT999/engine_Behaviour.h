@@ -25,7 +25,7 @@ enum Animation_State
 
 enum Animation_Bond
 {
-	Value,X,Y,Width,Height,Angle,Opacity
+	Value,X,Y,Width,Height,Angle,Opacity,Size
 };
 
 enum Animation_StopMode

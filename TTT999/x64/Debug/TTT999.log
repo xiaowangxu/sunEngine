@@ -4,51 +4,11 @@ c:\users\王徐\studio unnamed\999\sunengine\ttt999\vector.h(15): warning C4114:
 c:\users\王徐\studio unnamed\999\sunengine\ttt999\vector.h(51): warning C4114: 多次使用同一类型限定符
   c:\users\王徐\studio unnamed\999\sunengine\ttt999\vector.h(55): note: 参见对正在编译的 类 模板 实例化 "Vector3<T>" 的引用
 c:\users\王徐\studio unnamed\999\sunengine\ttt999\engine_behaviour.cpp(180): warning C4244: “参数”: 从“double”转换到“const GLclampf”，可能丢失数据
-  engine_BehaviourManager.cpp
-c:\users\王徐\studio unnamed\999\sunengine\ttt999\vector.h(15): warning C4114: 多次使用同一类型限定符
-  c:\users\王徐\studio unnamed\999\sunengine\ttt999\vector.h(19): note: 参见对正在编译的 类 模板 实例化 "Vector2<T>" 的引用
-c:\users\王徐\studio unnamed\999\sunengine\ttt999\vector.h(51): warning C4114: 多次使用同一类型限定符
-  c:\users\王徐\studio unnamed\999\sunengine\ttt999\vector.h(55): note: 参见对正在编译的 类 模板 实例化 "Vector3<T>" 的引用
-  engine_Graph.cpp
-c:\users\王徐\studio unnamed\999\sunengine\ttt999\vector.h(15): warning C4114: 多次使用同一类型限定符
-  c:\users\王徐\studio unnamed\999\sunengine\ttt999\vector.h(19): note: 参见对正在编译的 类 模板 实例化 "Vector2<T>" 的引用
-c:\users\王徐\studio unnamed\999\sunengine\ttt999\vector.h(51): warning C4114: 多次使用同一类型限定符
-  c:\users\王徐\studio unnamed\999\sunengine\ttt999\vector.h(55): note: 参见对正在编译的 类 模板 实例化 "Vector3<T>" 的引用
-c:\users\王徐\studio unnamed\999\sunengine\ttt999\engine_graph.cpp(15): warning C4267: “初始化”: 从“size_t”转换到“int”，可能丢失数据
-c:\users\王徐\studio unnamed\999\sunengine\ttt999\engine_graph.cpp(126): warning C4267: “初始化”: 从“size_t”转换到“int”，可能丢失数据
-c:\users\王徐\studio unnamed\999\sunengine\ttt999\engine_graph.cpp(140): warning C4267: “初始化”: 从“size_t”转换到“int”，可能丢失数据
-c:\users\王徐\studio unnamed\999\sunengine\ttt999\engine_graph.cpp(149): warning C4267: “初始化”: 从“size_t”转换到“int”，可能丢失数据
-  engine_Plugin.cpp
-c:\users\王徐\studio unnamed\999\sunengine\ttt999\vector.h(15): warning C4114: 多次使用同一类型限定符
-  c:\users\王徐\studio unnamed\999\sunengine\ttt999\vector.h(19): note: 参见对正在编译的 类 模板 实例化 "Vector2<T>" 的引用
-c:\users\王徐\studio unnamed\999\sunengine\ttt999\vector.h(51): warning C4114: 多次使用同一类型限定符
-  c:\users\王徐\studio unnamed\999\sunengine\ttt999\vector.h(55): note: 参见对正在编译的 类 模板 实例化 "Vector3<T>" 的引用
-c:\users\王徐\studio unnamed\999\sunengine\ttt999\engine_plugin.cpp(149): warning C4244: “参数”: 从“GLdouble”转换到“GLfloat”，可能丢失数据
-c:\users\王徐\studio unnamed\999\sunengine\ttt999\engine_plugin.cpp(148): warning C4244: “参数”: 从“GLdouble”转换到“GLfloat”，可能丢失数据
   sunEngine.cpp
 c:\users\王徐\studio unnamed\999\sunengine\ttt999\vector.h(15): warning C4114: 多次使用同一类型限定符
   c:\users\王徐\studio unnamed\999\sunengine\ttt999\vector.h(19): note: 参见对正在编译的 类 模板 实例化 "Vector2<T>" 的引用
 c:\users\王徐\studio unnamed\999\sunengine\ttt999\vector.h(51): warning C4114: 多次使用同一类型限定符
   c:\users\王徐\studio unnamed\999\sunengine\ttt999\vector.h(55): note: 参见对正在编译的 类 模板 实例化 "Vector3<T>" 的引用
 c:\users\王徐\studio unnamed\999\sunengine\ttt999\sunengine.h(19): warning C4244: “参数”: 从“double”转换到“GLint”，可能丢失数据
-  sunEngine_Utility.cpp
-c:\users\王徐\studio unnamed\999\sunengine\ttt999\vector.h(15): warning C4114: 多次使用同一类型限定符
-  c:\users\王徐\studio unnamed\999\sunengine\ttt999\vector.h(19): note: 参见对正在编译的 类 模板 实例化 "Vector2<T>" 的引用
-c:\users\王徐\studio unnamed\999\sunengine\ttt999\vector.h(51): warning C4114: 多次使用同一类型限定符
-  c:\users\王徐\studio unnamed\999\sunengine\ttt999\vector.h(55): note: 参见对正在编译的 类 模板 实例化 "Vector3<T>" 的引用
-c:\users\王徐\studio unnamed\999\sunengine\ttt999\sunengine_utility.cpp(56): warning C4244: “参数”: 从“GLdouble”转换到“GLsizei”，可能丢失数据
-c:\users\王徐\studio unnamed\999\sunengine\ttt999\sunengine_utility.cpp(56): warning C4244: “参数”: 从“GLdouble”转换到“GLint”，可能丢失数据
-c:\users\王徐\studio unnamed\999\sunengine\ttt999\sunengine_utility.cpp(59): warning C4244: “=”: 从“GLdouble”转换到“T”，可能丢失数据
-          with
-          [
-              T=int
-          ]
-c:\users\王徐\studio unnamed\999\sunengine\ttt999\sunengine_utility.cpp(64): warning C4244: “参数”: 从“double”转换到“GLsizei”，可能丢失数据
-c:\users\王徐\studio unnamed\999\sunengine\ttt999\sunengine_utility.cpp(64): warning C4244: “参数”: 从“GLdouble”转换到“GLint”，可能丢失数据
-c:\users\王徐\studio unnamed\999\sunengine\ttt999\sunengine_utility.cpp(68): warning C4244: “=”: 从“double”转换到“T”，可能丢失数据
-          with
-          [
-              T=int
-          ]
   正在生成代码...
   TTT999.vcxproj -> C:\Users\王徐\studio UNNAMED\999\sunEngine\x64\Debug\sunEngine.exe
