@@ -42,6 +42,37 @@ void Animater::SetAnimation(double start, double end, double duration, bh_Animat
 	State = bh_Animater::Null;
 }
 
+void Animater::TargetUpdate()
+{
+	switch (this->Bond)
+	{
+	case bh_Animater::X:
+		this->GetTarget()->SetX(this->Value);
+		break;
+	case bh_Animater::Y:
+		this->GetTarget()->SetY(this->Value);
+		break;
+	case bh_Animater::Width:
+		this->GetTarget()->SetWidth(this->Value);
+		break;
+	case bh_Animater::Height:
+		this->GetTarget()->SetHeight(this->Value);
+		break;
+	case bh_Animater::Angle:
+		this->GetTarget()->SetAngle(this->Value);
+		break;
+	case bh_Animater::Opacity:
+		this->GetTarget()->SetOpacity(this->Value);
+		break;
+	case bh_Animater::Size:
+		this->GetTarget()->SetWidth(this->Value);
+		this->GetTarget()->SetHeight(this->Value);
+		break;
+	default:
+		break;
+	}
+}
+
 void Animater::AnimationUpdate()
 {
 	//	On Finished
@@ -135,6 +166,7 @@ void Animater::AnimationUpdate()
 		this->CurrentTime += App.dt/1000.0;
 		//cout<<"Time Updated "<<CurrentTime<<endl;
 	}
+	this->TargetUpdate();
 }
 
 void Animater::StartAnimation()
@@ -167,6 +199,7 @@ void Animater::StopAnimation(bh_Animater::Animation_StopMode mode)
 	this->CurrentTime = 0;
 	this->State = bh_Animater::Ended;
 	this->SystemStopped = true;
+	//cout<<"SystemStopped"<<endl;
 	switch (mode)
 	{
 	case bh_Animater::Start:
@@ -180,6 +213,7 @@ void Animater::StopAnimation(bh_Animater::Animation_StopMode mode)
 	default:
 		break;
 	}
+	this->TargetUpdate();
 }
 
 void Animater::ReverseAnimation()
@@ -209,36 +243,8 @@ double Animater::GetValue()
 
 void Animater::Update(engine_Graph &Target)
 {
-	this->isUpdated = false;
-	if(this->State == bh_Animater::Null)	return;
 	this->AnimationUpdate();
-	switch (this->Bond)
-	{
-	case bh_Animater::X:
-		this->GetTarget()->SetX(this->Value);
-		break;
-	case bh_Animater::Y:
-		this->GetTarget()->SetY(this->Value);
-		break;
-	case bh_Animater::Width:
-		this->GetTarget()->SetWidth(this->Value);
-		break;
-	case bh_Animater::Height:
-		this->GetTarget()->SetHeight(this->Value);
-		break;
-	case bh_Animater::Angle:
-		this->GetTarget()->SetAngle(this->Value);
-		break;
-	case bh_Animater::Opacity:
-		this->GetTarget()->SetOpacity(this->Value);
-		break;
-	case bh_Animater::Size:
-		this->GetTarget()->SetWidth(this->Value);
-		this->GetTarget()->SetHeight(this->Value);
-		break;
-	default:
-		break;
-	}
+	this->isUpdated = false;
 }
 
 // MouseSensor

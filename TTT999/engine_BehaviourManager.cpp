@@ -29,7 +29,7 @@ bool Behaviour::isActive() const
 
 void Behaviour::Update(engine_Graph &target)
 {
-	std::cout << ">>Behaviour:" << this->Name << "\n";
+	//std::cout << ">>Behaviour:" << this->Name << "\n";
 }
 
 Behaviour::~Behaviour()

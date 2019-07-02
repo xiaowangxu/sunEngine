@@ -9,8 +9,8 @@ using namespace std;
 struct Application
 {
 	string Title = "sunEngine v0.1.2";
-	Vector2<int> WindowSize = Vector2<int>(960,540);
-	Vector2<GLdouble> ViewportSize = Vector2<GLdouble>(1920.0, 1080.0);
+	Vector2<int> WindowSize = Vector2<int>(960,700);
+	Vector2<GLdouble> ViewportSize = Vector2<GLdouble>(1920.0, 1400);
 	Vector2<GLdouble> Origin = Vector2<GLdouble>(0., 0.);
 	Vector3<GLclampf> BgColor = Vector3<GLclampf>(0.16f, 0.2f, 0.37f);
 	int dt = 16;

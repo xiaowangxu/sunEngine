@@ -47,6 +47,8 @@ private:
 	bool isUpdated = false, SystemStopped = false;
 	bh_Animater::Animation_State LastState = bh_Animater::Null;
 	bool OnFinish = false;
+
+	void TargetUpdate();
 public:
 	Animater();
 	Animater(const string &name, double start, double end, double duration, bh_Animater::Animation_Type type, bh_Animater::Animation_Mode mode, bh_Animater::Animation_Bond target);
