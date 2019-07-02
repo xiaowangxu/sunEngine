@@ -156,7 +156,6 @@
     <ClInclude Include="engine_BehaviourManager.h" />
     <ClInclude Include="engine_Graph.h" />
     <ClInclude Include="engine_Plugin.h" />
-    <ClInclude Include="gm_TTT.h" />
     <ClInclude Include="List.h" />
     <ClInclude Include="pch.h" />
     <ClInclude Include="resource.h" />
@@ -175,7 +174,6 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
     </ClCompile>
     <ClCompile Include="engine_Plugin.cpp" />
-    <ClCompile Include="gm_TTT.cpp" />
     <ClCompile Include="sunEngine.cpp" />
     <ClCompile Include="sunEngine_Utility.cpp" />
   </ItemGroup>

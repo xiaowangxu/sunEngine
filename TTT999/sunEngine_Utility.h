@@ -8,7 +8,7 @@ using namespace std;
 
 struct Application
 {
-	string Title = "sunEngine v0.1.2";
+	string Title = "TTT999 by studio UNNAMED";
 	Vector2<int> WindowSize = Vector2<int>(960,700);
 	Vector2<GLdouble> ViewportSize = Vector2<GLdouble>(1920.0, 1400);
 	Vector2<GLdouble> Origin = Vector2<GLdouble>(0., 0.);
