@@ -72,6 +72,11 @@ Circle.AddBehaviour(SizeChanger);
 
 在 `sunEngine.cpp` 中：
 ```c++
+#include "pch.h"
+#include "sunEngine.h"
+#include "stdlib.h"
+using namespace std;
+
 // config your game setting in "sunEngine_Utility.h"
 // global Mouse Plugin
 // 在"sunEngine_Utility.h"中进行项目设置
@@ -87,7 +92,7 @@ public:
 	Animater SizeChanger;
 	MouseSensor Sensor;
 
-	GameObject
+	GameObject()
 	{
 		Circle.AddBehaviour(SizeChanger);
 		Circle.AddBehaviour(Sensor);
