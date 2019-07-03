@@ -107,9 +107,9 @@ void game_Initialize()
 {
 	// the script here will only run once before the game start
 	// 游戏初始化
-	Object.SetShape(4,1.0,1.0,1.0);
-	Object.SetPosition(960,540);
-	Object.SetSize(200,200);
+	Object.Circle.SetShape(4,1.0,1.0,1.0);
+	Object.Circle.SetPosition(960,540);
+	Object.Circle.SetSize(200,200);
 }
 
 void game_MainLoop()
