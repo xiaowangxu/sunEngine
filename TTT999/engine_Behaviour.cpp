@@ -17,7 +17,7 @@ Animater::Animater():
 
 Animater::Animater(const string &name, double start, double end, double duration, bh_Animater::Animation_Type type, bh_Animater::Animation_Mode mode, bh_Animater::Animation_Bond target):
 	Behaviour(name),
-	Value(0),
+	Value(start),
 	Start(start),
 	End(end),
 	Duration(duration),
@@ -30,7 +30,7 @@ Animater::Animater(const string &name, double start, double end, double duration
 	
 void Animater::SetAnimation(double start, double end, double duration, bh_Animater::Animation_Type type, bh_Animater::Animation_Mode mode, bh_Animater::Animation_Bond target)
 {
-	Value = 0;
+	Value = start;
 	Start = start;
 	End = end;
 	Duration = duration;

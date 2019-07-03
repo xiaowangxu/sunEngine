@@ -18,12 +18,78 @@ const GLfloat	BlankHighlightOpac = 0.15,
 				BlankDehighlightOpac = 0.05;
 
 string GameState = "Begin";
+
 enum Player
 {
 	Player1,Player2
 }Turn;
-Vector2<int> NextBoard = Vector2<int>(0,0);
 
+class PlayerChess
+{
+public:
+	int EdgeCount;
+	Vector3<GLfloat> Color;
+	Shape PlayerIcon;
+	Animater SizeChanger;
+	Animater ColorR,ColorG,ColorB,Opac;
+
+	PlayerChess(const int edgecount,const Vector3<GLfloat> color):EdgeCount(edgecount),Color(color)
+	{
+		PlayerIcon.SetSize(120,120);
+		PlayerIcon.SetShape(EdgeCount,Color.X,Color.Y,Color.Z);
+		PlayerIcon.SetAnchorPoint(sunEngine_Graph::Center);
+		PlayerIcon.AddBehaviour(SizeChanger);
+		PlayerIcon.AddBehaviour(ColorR);
+		PlayerIcon.AddBehaviour(ColorG);
+		PlayerIcon.AddBehaviour(ColorB);
+		PlayerIcon.AddBehaviour(Opac);
+	}
+
+	void Highlight()
+	{
+		ColorR.StopAnimation(bh_Animater::Current);
+		ColorG.StopAnimation(bh_Animater::Current);
+		ColorB.StopAnimation(bh_Animater::Current);
+		Opac.StopAnimation(bh_Animater::Current);
+		ColorR.SetAnimation(PlayerIcon.GetColor().X, Color.X, 0.3, bh_Animater::CircleOut, bh_Animater::Once, bh_Animater::Value);
+		ColorG.SetAnimation(PlayerIcon.GetColor().Y, Color.Y, 0.3, bh_Animater::CircleOut, bh_Animater::Once, bh_Animater::Value);
+		ColorB.SetAnimation(PlayerIcon.GetColor().Z, Color.Z, 0.3, bh_Animater::CircleOut, bh_Animater::Once, bh_Animater::Value);
+		Opac.SetAnimation(PlayerIcon.GetOpacity(), 1.0, 0.3, bh_Animater::CircleOut, bh_Animater::Once, bh_Animater::Opacity);
+		ColorR.StartAnimation();
+		ColorG.StartAnimation();
+		ColorB.StartAnimation();
+		Opac.StartAnimation();
+	}
+
+	void Dehighlight()
+	{
+		ColorR.StopAnimation(bh_Animater::Current);
+		ColorG.StopAnimation(bh_Animater::Current);
+		ColorB.StopAnimation(bh_Animater::Current);
+		Opac.StopAnimation(bh_Animater::Current);
+		ColorR.SetAnimation(PlayerIcon.GetColor().X, 1.0, 0.3, bh_Animater::CircleOut, bh_Animater::Once, bh_Animater::Value);
+		ColorG.SetAnimation(PlayerIcon.GetColor().Y, 1.0, 0.3, bh_Animater::CircleOut, bh_Animater::Once, bh_Animater::Value);
+		ColorB.SetAnimation(PlayerIcon.GetColor().Z, 1.0, 0.3, bh_Animater::CircleOut, bh_Animater::Once, bh_Animater::Value);
+		Opac.SetAnimation(PlayerIcon.GetOpacity(), BlankDehighlightOpac, 0.3, bh_Animater::CircleOut, bh_Animater::Once, bh_Animater::Opacity);
+		ColorR.StartAnimation();
+		ColorG.StartAnimation();
+		ColorB.StartAnimation();
+		Opac.StartAnimation();
+	}
+
+	void Update()
+	{
+		ColorR.AnimationUpdate();
+		ColorG.AnimationUpdate();
+		ColorB.AnimationUpdate();
+		PlayerIcon.SetColor(ColorR.GetValue(),ColorG.GetValue(),ColorB.GetValue());
+	}
+};
+
+PlayerChess PlayerA(4, Vector3<GLfloat>(0.96, 0.38, 0.38)), PlayerB(6, Vector3<GLfloat>(1.0, 0.94, 0.75));
+//PlayerChess PlayerA(4, Vector3<GLfloat>(1.0,1.0,1.0)), PlayerB(6, Vector3<GLfloat>(0.7, 0.7, 0.7));
+
+Vector2<int> NextBoard = Vector2<int>(0, 0);
 
 class TicTekToe
 {
@@ -75,9 +141,10 @@ public:
 		{
 			for(int j=0;j<3;j++)
 			{
-				Board[i][j]=0;
+				Board[i][j] = 0;
 				Chess[i][j].SetShape(60, 1.0, 1.0, 1.0);
 				Chess[i][j].SetOpacity(0);
+				Chess[i][j].SetVisible(sunEngine_Graph::Visible);
 			}
 		}
 		WinnerChess.SetVisible(sunEngine_Graph::Invisible);
@@ -232,7 +299,7 @@ public:
 			}
 			else if(Winner == 1)
 			{
-				WinnerChess.SetShape(4, 0.96, 0.38, 0.38);
+				WinnerChess.SetShape(PlayerA.EdgeCount, PlayerA.Color.X, PlayerA.Color.Y, PlayerA.Color.Z);
 				WinnerChess.SetVisible(sunEngine_Graph::Visible);
 				WinnerAnimation.SetAnimation((Size.X + ChessSize) + 30, Size.X + ChessSize, 0.3, bh_Animater::ElasticOut, bh_Animater::Once, bh_Animater::Size);
 				WinnerAnimation.StartAnimation();
@@ -240,7 +307,7 @@ public:
 			}
 			else if(Winner == 2)
 			{
-				WinnerChess.SetShape(6, 1.0, 0.94, 0.75);
+				WinnerChess.SetShape(PlayerB.EdgeCount, PlayerB.Color.X, PlayerB.Color.Y, PlayerB.Color.Z);
 				WinnerChess.SetVisible(sunEngine_Graph::Visible);
 				WinnerAnimation.SetAnimation((Size.X + ChessSize) + 30, Size.X + ChessSize, 0.3, bh_Animater::ElasticOut, bh_Animater::Once, bh_Animater::Size);
 				WinnerAnimation.StartAnimation();
@@ -318,18 +385,16 @@ public:
 
 	void BlankHighlight(const int i,const int j,bool Highlight)
 	{
+		SizeChanger[i][j].StopAnimation(bh_Animater::Current);
 		if(Highlight)
 		{
-			SizeChanger[i][j].StopAnimation(bh_Animater::Current);
 			SizeChanger[i][j].SetAnimation(Chess[i][j].GetSize().X, BlankMouseInSize, 0.3, bh_Animater::BackOut, bh_Animater::Once, bh_Animater::Size);
-			SizeChanger[i][j].StartAnimation();
 		}
 		else
 		{
-			SizeChanger[i][j].StopAnimation(bh_Animater::Current);
 			SizeChanger[i][j].SetAnimation(Chess[i][j].GetSize().X, BlankMouseOutSize, 0.3, bh_Animater::BackOut, bh_Animater::Once, bh_Animater::Size);
-			SizeChanger[i][j].StartAnimation();
 		}
+		SizeChanger[i][j].StartAnimation();
 	}
 
 	void MoveChess(const int i,const int j,const int player)
@@ -344,13 +409,13 @@ public:
 			SizeChanger[i][j].StartAnimation();
 			if(player == 1)
 			{
-				Chess[i][j].SetEdgeCount(4);
-				Chess[i][j].SetColor(0.96,0.38,0.38);
+				Chess[i][j].SetEdgeCount(PlayerA.EdgeCount);
+				Chess[i][j].SetColor(PlayerA.Color.X,PlayerA.Color.Y,PlayerA.Color.Z);
 			}
 			else if(player == 2)
 			{
-				Chess[i][j].SetEdgeCount(6);
-				Chess[i][j].SetColor(1.0, 0.94, 0.75);
+				Chess[i][j].SetEdgeCount(PlayerB.EdgeCount);
+				Chess[i][j].SetColor(PlayerB.Color.X,PlayerB.Color.Y,PlayerB.Color.Z);
 			}
 			NextBoard = Vector2<int>(i,j);
 			TestWinner();
@@ -418,7 +483,7 @@ public:
 						{
 							if (Touch[i][j].OnRollIn())
 							{
-								BlankHighlight(i,j,1);
+								BlankHighlight(i, j, 1);
 							}
 							if (Touch[i][j].OnRollOut())
 							{
@@ -526,6 +591,8 @@ public:
 			SetAllPlayable();
 			HighlightPlayable();
 			Turn = Player1;
+			PlayerA.Highlight();
+			PlayerB.Dehighlight();
 			GameState = "Move";
 			//cout<<"Begin"<<endl;
 		}
@@ -551,6 +618,17 @@ public:
 			}
 			HighlightPlayable();
 			Turn = Turn==Player1? Player1:Player2;
+			if(Turn == Player1)
+			{
+				PlayerA.Highlight();
+				PlayerB.Dehighlight();
+			}
+			else if(Turn == Player2)
+			{
+				PlayerA.Dehighlight();
+				PlayerB.Highlight();
+			}
+			
 			GameState = "Move";
 		}
 	}
@@ -561,11 +639,18 @@ TTT999 GameBoard;
 void game_Initialize()
 {
 	// the script here will only run once before the game start
-	
+	PlayerA.PlayerIcon.SetPosition(200,700);
+	PlayerB.PlayerIcon.SetPosition(1720,700);
 }
 
 void game_MainLoop()
 {
 	// put your main game logic here
 	GameBoard.TTT999Loop();
+	PlayerA.Update();
+	PlayerB.Update();
+	if (MouseOnClick(Mouse_Button::Right))
+	{
+		GameState = "Begin";
+	}
 }
