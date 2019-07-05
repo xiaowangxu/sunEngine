@@ -1,0 +1,53 @@
+﻿<?xml version="1.0" encoding="utf-8"?><DEFECTS><DEFECT>
+    <SFA>
+      <FILEPATH>c:\users\王徐\studio unnamed\999\sunengine\ttt999</FILEPATH>
+      <FILENAME>sunengine.cpp</FILENAME>
+      <LINE>355</LINE>
+      <COLUMN>55</COLUMN>
+    </SFA>
+    <DEFECTCODE>26451</DEFECTCODE>
+    <DESCRIPTION>Arithmetic overflow: Using operator '-' on a 4 byte value and then casting the result to a 8 byte value. Cast the value to the wider type before calling operator '-' to avoid overflow (io.2).</DESCRIPTION>
+    <FUNCTION>TicTekToe::UpdateBoardArrangment</FUNCTION>
+    <DECORATED>?UpdateBoardArrangment@TicTekToe@@QAEXXZ</DECORATED>
+    <FUNCLINE>349</FUNCLINE>
+    <PATH></PATH>
+  </DEFECT><DEFECT>
+    <SFA>
+      <FILEPATH>c:\users\王徐\studio unnamed\999\sunengine\ttt999</FILEPATH>
+      <FILENAME>sunengine.cpp</FILENAME>
+      <LINE>355</LINE>
+      <COLUMN>87</COLUMN>
+    </SFA>
+    <DEFECTCODE>26451</DEFECTCODE>
+    <DESCRIPTION>Arithmetic overflow: Using operator '-' on a 4 byte value and then casting the result to a 8 byte value. Cast the value to the wider type before calling operator '-' to avoid overflow (io.2).</DESCRIPTION>
+    <FUNCTION>TicTekToe::UpdateBoardArrangment</FUNCTION>
+    <DECORATED>?UpdateBoardArrangment@TicTekToe@@QAEXXZ</DECORATED>
+    <FUNCLINE>349</FUNCLINE>
+    <PATH></PATH>
+  </DEFECT><DEFECT>
+    <SFA>
+      <FILEPATH>c:\users\王徐\studio unnamed\999\sunengine\ttt999</FILEPATH>
+      <FILENAME>sunengine.cpp</FILENAME>
+      <LINE>530</LINE>
+      <COLUMN>37</COLUMN>
+    </SFA>
+    <DEFECTCODE>26451</DEFECTCODE>
+    <DESCRIPTION>Arithmetic overflow: Using operator '+' on a 4 byte value and then casting the result to a 8 byte value. Cast the value to the wider type before calling operator '+' to avoid overflow (io.2).</DESCRIPTION>
+    <FUNCTION>TTT999::{ctor}</FUNCTION>
+    <DECORATED>??0TTT999@@QAE@XZ</DECORATED>
+    <FUNCLINE>524</FUNCLINE>
+    <PATH></PATH>
+  </DEFECT><DEFECT>
+    <SFA>
+      <FILEPATH>c:\users\王徐\studio unnamed\999\sunengine\ttt999</FILEPATH>
+      <FILENAME>sunengine.cpp</FILENAME>
+      <LINE>530</LINE>
+      <COLUMN>58</COLUMN>
+    </SFA>
+    <DEFECTCODE>26451</DEFECTCODE>
+    <DESCRIPTION>Arithmetic overflow: Using operator '+' on a 4 byte value and then casting the result to a 8 byte value. Cast the value to the wider type before calling operator '+' to avoid overflow (io.2).</DESCRIPTION>
+    <FUNCTION>TTT999::{ctor}</FUNCTION>
+    <DECORATED>??0TTT999@@QAE@XZ</DECORATED>
+    <FUNCLINE>524</FUNCLINE>
+    <PATH></PATH>
+  </DEFECT></DEFECTS>

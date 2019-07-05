@@ -31,18 +31,20 @@ public:
 	Vector3<GLfloat> Color;
 	Shape PlayerIcon;
 	Animater SizeChanger;
+	Animater YChanger;
 	Animater ColorR,ColorG,ColorB,Opac;
 
 	PlayerChess(const int edgecount,const Vector3<GLfloat> color):EdgeCount(edgecount),Color(color)
 	{
 		PlayerIcon.SetSize(120,120);
 		PlayerIcon.SetShape(EdgeCount,Color.X,Color.Y,Color.Z);
-		PlayerIcon.SetAnchorPoint(sunEngine_Graph::Center);
+		PlayerIcon.SetAnchorPoint(sunEngine_Graph::BottomLeft);
 		PlayerIcon.AddBehaviour(SizeChanger);
 		PlayerIcon.AddBehaviour(ColorR);
 		PlayerIcon.AddBehaviour(ColorG);
 		PlayerIcon.AddBehaviour(ColorB);
 		PlayerIcon.AddBehaviour(Opac);
+		PlayerIcon.AddBehaviour(YChanger);
 	}
 
 	void Highlight()
@@ -75,6 +77,31 @@ public:
 		ColorG.StartAnimation();
 		ColorB.StartAnimation();
 		Opac.StartAnimation();
+	}
+
+	void Reset()
+	{
+		YChanger.StopAnimation(bh_Animater::Current);
+		YChanger.SetAnimation(PlayerIcon.GetPosition().Y,100, 0.3, bh_Animater::CircleOut, bh_Animater::Once, bh_Animater::Y);
+		YChanger.StartAnimation();
+	}
+
+	void SetWinner(bool winner)
+	{
+		if(winner)
+		{
+			Highlight();
+			YChanger.StopAnimation(bh_Animater::Current);
+			YChanger.SetAnimation(PlayerIcon.GetPosition().Y,200,0.4,bh_Animater::CubicOut,bh_Animater::PingPong,bh_Animater::Y);
+			YChanger.StartAnimation();
+		}
+		else
+		{
+			Dehighlight();
+			YChanger.StopAnimation(bh_Animater::Current);
+			YChanger.SetAnimation(PlayerIcon.GetPosition().Y,100, 0.4, bh_Animater::Linear, bh_Animater::Once, bh_Animater::Y);
+			YChanger.StartAnimation();
+		}
 	}
 
 	void Update()
@@ -118,6 +145,7 @@ public:
 		SetBoardPosition(960,700);
 		SetBoardSize(220,220);
 		WinnerChess.AddBehaviour(WinnerAnimation);
+		WinnerChess.SetVisible(sunEngine_Graph::Invisible);
 		for(int i=0;i<3;i++)
 		{
 			for(int j=0;j<3;j++)
@@ -149,6 +177,37 @@ public:
 		}
 		WinnerChess.SetVisible(sunEngine_Graph::Invisible);
 		//cout<<"TTT Reseted"<<endl;
+	}
+
+	void ResetAnimation()
+	{
+		WinnerAnimation.StopAnimation(bh_Animater::Current);
+		WinnerAnimation.SetAnimation(WinnerChess.GetSize().X, 0, 0.2, bh_Animater::CubicIn, bh_Animater::Once, bh_Animater::Size);
+		WinnerAnimation.StartAnimation();
+		for(int i  = 0; i<3;i++)
+		{
+			for(int j= 0;j<3;j++)
+			{
+				if(Playable)
+				{
+					SizeChanger[i][j].StopAnimation(bh_Animater::Current);
+					SizeChanger[i][j].SetAnimation(Chess[i][j].GetSize().X, 0, 0.2, bh_Animater::CubicIn, bh_Animater::Once, bh_Animater::Size);
+					SizeChanger[i][j].StartAnimation();
+				}
+				else if(Board[i][j] != 0)
+				{
+					SizeChanger[i][j].StopAnimation(bh_Animater::Current);
+					SizeChanger[i][j].SetAnimation(Chess[i][j].GetSize().X, 0, 0.2, bh_Animater::CubicIn, bh_Animater::Once, bh_Animater::Size);
+					SizeChanger[i][j].StartAnimation();
+				}
+				else
+				{
+					OpacChanger[i][j].StopAnimation(bh_Animater::Current);
+					OpacChanger[i][j].SetAnimation(Chess[i][j].GetOpacity(), 0, 0.2, bh_Animater::CircleOut, bh_Animater::Once, bh_Animater::Opacity);
+					OpacChanger[i][j].StartAnimation();
+				}
+			}
+		}
 	}
 
 	void TestWinner()
@@ -518,6 +577,8 @@ class TTT999
 {
 public:
 	TicTekToe Board[3][3];
+	bool isFinished = false;
+	int Winner = 0;
 
 	TTT999()
 	{
@@ -538,6 +599,149 @@ public:
 			{
 				Board[i][j].Reset();
 			}
+		}
+	}
+
+	void TestWinner()
+	{
+		int LastChess = 0;
+		bool isFull = true;
+		// Horizontal
+		for (int i = 0; i < 3; i++)
+		{
+			if (!Board[i][0].isFinished)
+			{
+				isFull = false;
+				continue;
+			}
+			LastChess = Board[i][0].Winner;
+			for (int j = 1; j < 3; j++)
+			{
+				if (!Board[i][j].isFinished)
+				{
+					isFull = false;
+					break;
+				}
+				else if (Board[i][j].Winner != LastChess)
+				{
+					break;
+				}
+				else
+				{
+					if (j == 2 && LastChess != 0)
+					{
+						//cout << ">>Win!! H :" << endl;
+						isFinished = true;
+						Winner = LastChess;
+						return;
+					}
+				}
+			}
+		}
+		// Vertical
+		for (int j = 0; j < 3; j++)
+		{
+			if (!Board[0][j].isFinished)
+			{
+				isFull = false;
+				continue;
+			}
+			LastChess = Board[0][j].Winner;
+			for (int i = 1; i < 3; i++)
+			{
+				if (!Board[i][j].isFinished)
+				{
+					isFull = false;
+					break;
+				}
+				else if (Board[i][j].Winner != LastChess)
+				{
+					break;
+				}
+				else
+				{
+					if (i == 2 && LastChess != 0)
+					{
+						//cout << ">>Win!! V :" << endl;
+						isFinished = true;
+						Winner = LastChess;
+						return;
+					}
+				}
+			}
+		}
+		// Diagonal
+		if (Board[0][0].isFinished)
+		{
+			LastChess = this->Board[0][0].Winner;
+			for (int i = 1; i < 3; i++)
+			{
+				if (!Board[i][i].isFinished)
+				{
+					isFull = false;
+					break;
+				}
+				else if (Board[i][i].Winner != LastChess)
+				{
+					break;
+				}
+				else
+				{
+					if (i == 2 && LastChess != 0)
+					{
+						//cout << ">>Win!! Diagonal :" << endl;
+						isFinished = true;
+						Winner = LastChess;
+						return;
+					}
+				}
+			}
+		}
+		else
+		{
+			isFull = false;
+		}
+		if (Board[0][2].isFinished)
+		{
+			LastChess = this->Board[0][2].Winner;
+			for (int i = 1; i < 3; i++)
+			{
+				if (!Board[i][2 - i].isFinished)
+				{
+					isFull = false;
+					break;
+				}
+				else if (Board[i][2 - i].Winner != LastChess)
+				{
+					break;
+				}
+				else
+				{
+					if (i == 2 && LastChess != 0)
+					{
+						//cout << ">>Win!! Diagonal :" << endl;
+						isFinished = true;
+						Winner = LastChess;
+						return;
+					}
+				}
+			}
+		}
+		else
+		{
+			isFull = false;
+		}
+		// No One Win
+		if (isFull)
+		{
+			//cout<<">> isFull"<<endl;
+			isFinished = true;
+			Winner = 0;
+		}
+		else
+		{
+			isFinished = false;
+			Winner = 0;
 		}
 	}
 
@@ -563,6 +767,17 @@ public:
 		}
 	}
 
+	void SetAllUnplayable()
+	{
+		for (int i = 0; i < 3; i++)
+		{
+			for (int j = 0; j < 3; j++)
+			{
+				Board[i][j].Playable = false;
+			}
+		}
+	}
+
 	void HighlightPlayable()
 	{
 		for (int i = 0; i < 3; i++)
@@ -583,11 +798,24 @@ public:
 		}
 	}
 
+	void ResetAnimation()
+	{
+		for (int i = 0; i < 3; i++)
+		{
+			for (int j = 0; j < 3; j++)
+			{
+				Board[i][j].ResetAnimation();
+			}
+		}
+	}
+
 	void TTT999Loop()
 	{
 		if(GameState == "Begin")
 		{
 			Reset();
+			PlayerA.Reset();
+			PlayerB.Reset();
 			SetAllPlayable();
 			HighlightPlayable();
 			Turn = Player1;
@@ -608,28 +836,69 @@ public:
 		}
 		if(GameState == "MoveFinished")
 		{
-			if(Board[NextBoard.X][NextBoard.Y].isFinished)
+			TestWinner();
+			//cout<<(isFinished?"Ended":"Playing")<<" Winner: "<<Winner<<endl;
+			if(isFinished)
 			{
-				SetAllPlayable();
+				SetAllUnplayable();
+				HighlightPlayable();
+				if(Winner == 1)
+				{
+					PlayerA.SetWinner(1);
+					PlayerB.SetWinner(0);
+				}
+				else if(Winner == 2)
+				{
+					PlayerA.SetWinner(0);
+					PlayerB.SetWinner(1);
+				}
+				else
+				{
+					PlayerA.SetWinner(1);
+					PlayerB.SetWinner(1);
+				}
+				GameState = "Finished";
 			}
 			else
 			{
-				SetPlayable(NextBoard.X, NextBoard.Y);
+				if(Board[NextBoard.X][NextBoard.Y].isFinished)
+				{
+					SetAllPlayable();
+				}
+				else
+				{
+					//SetAllPlayable();
+					SetPlayable(NextBoard.X, NextBoard.Y);
+				}
+				HighlightPlayable();
+				Turn = Turn==Player1? Player1:Player2;
+				if(Turn == Player1)
+				{
+					PlayerA.Highlight();
+					PlayerB.Dehighlight();
+				}
+				else if(Turn == Player2)
+				{
+					PlayerA.Dehighlight();
+					PlayerB.Highlight();
+				}
+				GameState = "Move";
 			}
-			HighlightPlayable();
-			Turn = Turn==Player1? Player1:Player2;
-			if(Turn == Player1)
+		}
+		if(GameState == "Finished")
+		{
+			/* if(MouseOnClick(Mouse_Button::Right))
 			{
-				PlayerA.Highlight();
-				PlayerB.Dehighlight();
-			}
-			else if(Turn == Player2)
+				ResetAnimation();
+				GameState = "ResetAnimation";
+			} */
+		}
+		if(GameState == "ResetAnimation")
+		{
+			if(Board[0][0].WinnerAnimation.OnFinished())
 			{
-				PlayerA.Dehighlight();
-				PlayerB.Highlight();
+				GameState = "Begin";
 			}
-			
-			GameState = "Move";
 		}
 	}
 };
@@ -639,8 +908,10 @@ TTT999 GameBoard;
 void game_Initialize()
 {
 	// the script here will only run once before the game start
-	PlayerA.PlayerIcon.SetPosition(200,700);
-	PlayerB.PlayerIcon.SetPosition(1720,700);
+	PlayerA.PlayerIcon.SetAnchorPoint(sunEngine_Graph::BottomLeft);
+	PlayerB.PlayerIcon.SetAnchorPoint(sunEngine_Graph::BottomRight);
+	PlayerA.PlayerIcon.SetPosition(100, 100);
+	PlayerB.PlayerIcon.SetPosition(1820, 100);
 }
 
 void game_MainLoop()
@@ -651,6 +922,12 @@ void game_MainLoop()
 	PlayerB.Update();
 	if (MouseOnClick(Mouse_Button::Right))
 	{
-		GameState = "Begin";
+		GameBoard.ResetAnimation();
+		GameState = "ResetAnimation";
+	}
+	if(MouseOnClick(Mouse_Button::Middle))
+	{
+		GameBoard.SetAllUnplayable();
+		GameBoard.HighlightPlayable();
 	}
 }
