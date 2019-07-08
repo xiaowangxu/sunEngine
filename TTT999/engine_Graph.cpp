@@ -108,16 +108,16 @@ sunEngine_Graph::engine_Graph_Visible engine_Graph::GetVisibility()
 void engine_Graph::AddBehaviour(Behaviour &behaviour)
 {
 	if(behaviour.GetTarget() != NULL)	return;
-	this->TEST.push_back(&behaviour);
+	this->List.push_back(&behaviour);
 	behaviour.SetTarget(this);
 }
 
 void engine_Graph::UpdateBehaviour()
 {
-	for (int i = 0; i < this->TEST.size(); i++)
+	for (int i = 0; i < this->List.size(); i++)
 	{
-		if (this->TEST.at(i)->isActive())
-			this->TEST.at(i)->Update(*this);
+		if (this->List.at(i)->isActive())
+			this->List.at(i)->Update(*this);
 	}
 }
 

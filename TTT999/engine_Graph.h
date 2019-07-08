@@ -40,7 +40,7 @@ private:
 	Vector2<GLdouble> Size = Vector2<GLdouble>(100, 100);
 	GLfloat Opacity = 1.0f;
 	sunEngine_Graph::engine_Graph_Visible Visible = sunEngine_Graph::Visible;
-	vector<Behaviour *> TEST;
+	vector<Behaviour *> List;
 public:
 	engine_Graph();
 	virtual ~engine_Graph();

@@ -925,9 +925,9 @@ void game_MainLoop()
 		GameBoard.ResetAnimation();
 		GameState = "ResetAnimation";
 	}
-	if(MouseOnClick(Mouse_Button::Middle))
+	/* if(MouseOnClick(Mouse_Button::Middle))
 	{
 		GameBoard.SetAllUnplayable();
 		GameBoard.HighlightPlayable();
-	}
+	} */
 }
