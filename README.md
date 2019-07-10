@@ -136,7 +136,7 @@ void game_MainLoop()
 
 glut作为一个巨大的状态机，绘制图形的方法一般为：
 
-``` c++{.line-numbers}
+``` c++
 glColor3f(Color.X, Color.Y, Color.Z);		//设置当前颜色
 glBegin(GL_POLYGON);						//设置状态为多边形绘制
 for (int i = 0; i < PointCount; i++)		//在多边形顶点数组中循环
@@ -148,7 +148,7 @@ glEnd();									//设置状态为结束
 
 这表明如果我们要绘制很多多边形的话我们需要手动使用上述代码，为了简化这一操作，我们先建立一个`engine_Graph`的类作为所有绘图类的基类（部分重要声明）：
 
-``` c++{.line-numbers}
+``` c++
 class Behaviour;		//Behaviour基类声明，因为在engine_Graph中要使用到Behaviour的引用
 
 class engine_Graph		//绘图基类
@@ -174,7 +174,7 @@ public:
 
 为了完成自动渲染，即在每次刷新时为每个绘图物体自动调用`Render()`函数，在`engine_Graph.h`和`engine_Graph.cpp`中我设计了一个全局向量表：
 
-``` c++{.line-numbers}
+``` c++
 //全局“engine_Graph指针”向量表
 extern vector<engine_Graph *> engine_Graph_Buffer;
 
@@ -195,7 +195,7 @@ void engine_Graph_Render()
 ```
 而`engine_Graph`的构造和析构函数为：
 
-``` c++{.line-numbers}
+``` c++
 engine_Graph::engine_Graph()		//构造函数
 {
 	engine_Graph_Buffer.push_back(this);		//将自己的指针加入全局向量表尾部
@@ -220,7 +220,7 @@ engine_Graph::~engine_Graph()
 
 在`engine_BehaviourManager.h`和`engine_BehaviourManager.cpp`中,Behaviour基类的声明和定义为：
 
-``` c++{.line-numbers}
+``` c++
 class Behaviour
 {
 private:
@@ -242,7 +242,7 @@ public:
 
 在`engine_Graph.h`和`engine_Graph.cpp`中：
 
-``` c++{.line-numbers}
+``` c++
 void engine_Graph::AddBehaviour(Behaviour &behaviour)	//将Behaviour加入到“Behaviour指针”的向量表
 {
 	if(behaviour.GetTarget() != NULL)	return;		//当前Behaviour已经有Target
@@ -262,7 +262,7 @@ void engine_Graph::UpdateBehaviour()			//更新“Behaviour指针”向量表中
 
 而`Behaviour`的自动执行可以认为是每个`engine_Graph`在被渲染之前都让`Behaviour`进行控制，在`engine_Graph.h`和`engine_Graph.cpp`中：
 
-``` c++{.line-numbers}
+``` c++
 void engine_Graph_Update()
 {
 	int Count = engine_Graph_Buffer.size();		//循环engine_Graph指针向量表
@@ -277,7 +277,7 @@ void engine_Graph_Update()
 
 在`sunEngine_Utility.h`中,有一个名为`Application`的结构体和一个对应的全局实例`App`。修改结构体定义的初始值即可进行项目设置：
 
-``` c++{.line-numbers}
+``` c++
 struct Application
 {
 	string Title = "TTT999 by studio UNNAMED";	// 游戏窗口标题
@@ -293,7 +293,7 @@ Application App;
 
 在`sunEngine.h`中(头文件包含已省略)：
 
-``` c++{.line-numbers}
+``` c++
 extern Application App;		//全局App结构体
 
 void game_Initialize();		//游戏逻辑初始化函数声明
@@ -315,7 +315,7 @@ int main(int argc, char *argv[])	//main函数
 
 其中`sunEngine_Initialize(argc, argv);`对OpenGL进行初始化：
 
-``` c++{.line-numbers}
+``` c++
 void sunEngine_Initialize(int argc, char *argv[])	//初始化函数
 {
 	//glut初始化
@@ -338,7 +338,7 @@ void sunEngine_Initialize(int argc, char *argv[])	//初始化函数
 
 `glutDisplayFunc(&sunEngine_Render);`绑定渲染函数，在`glutMainLoop()`中`sunEngine_Render()`将被自动呼叫
 
-``` c++{.line-numbers}
+``` c++
 void sunEngine_Render(void)		//渲染函数
 {
 	//清除显示
@@ -361,7 +361,7 @@ void sunEngine_Render(void)		//渲染函数
 
 `glutTimerFunc(App.dt, sunEngine_Tick, 1);`OpenGL定时，在经过App.dt时间后呼叫sunEngine_Tick()函数，计时器标记为1：
 
-``` c++{.line-numbers}
+``` c++
 void sunEngine_Tick(int dt)		//定时函数
 {
 	//执行游戏主循环
